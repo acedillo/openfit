@@ -3,29 +3,22 @@ package com.acedillo.openfit
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerViewLoadMoreScrollListener : RecyclerView.OnScrollListener {
+class RecyclerViewLoadMoreScrollListener(layoutManager: LinearLayoutManager) :
+    RecyclerView.OnScrollListener() {
 
     private var visibleThreshold = 20
     private lateinit var mOnLoadMoreListener: OnLoadMoreListener
     private var isLoading: Boolean = false
     private var lastVisibleItem: Int = 0
-    private var totalItemCount:Int = 0
-    private var mLayoutManager: RecyclerView.LayoutManager
+    private var totalItemCount: Int = 0
+    private var mLayoutManager: RecyclerView.LayoutManager = layoutManager
 
     fun setLoaded() {
         isLoading = false
     }
 
-    fun getLoaded(): Boolean {
-        return isLoading
-    }
-
     fun setOnLoadMoreListener(mOnLoadMoreListener: OnLoadMoreListener) {
         this.mOnLoadMoreListener = mOnLoadMoreListener
-    }
-
-    constructor(layoutManager: LinearLayoutManager) {
-        this.mLayoutManager = layoutManager
     }
 
 
@@ -36,7 +29,7 @@ class RecyclerViewLoadMoreScrollListener : RecyclerView.OnScrollListener {
 
         totalItemCount = mLayoutManager.itemCount
 
-            lastVisibleItem = (mLayoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+        lastVisibleItem = (mLayoutManager as LinearLayoutManager).findLastVisibleItemPosition()
 
         if (!isLoading && totalItemCount <= lastVisibleItem + visibleThreshold) {
             mOnLoadMoreListener.onLoadMore()

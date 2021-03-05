@@ -22,9 +22,10 @@ class HomeViewModelTest {
     private lateinit var repository: Repository
 
     @Before
-    fun setup(){
+    fun setup() {
         repository = Mockito.mock(Repository::class.java)
-        Mockito.`when`(repository.getWorkouts()).thenReturn(Gson().fromJson(loadFile("main.json"), Main::class.java))
+        Mockito.`when`(repository.getWorkouts())
+            .thenReturn(Gson().fromJson(loadFile("main.json"), Main::class.java))
     }
 
     @Test

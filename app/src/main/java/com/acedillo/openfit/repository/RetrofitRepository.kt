@@ -1,14 +1,13 @@
 package com.acedillo.openfit.repository
 
 import com.acedillo.openfit.model.Main
-import com.acedillo.openfit.model.Workout
 import com.acedillo.openfit.model.WorkoutDetail
 import com.acedillo.openfit.model.WorkoutImage
 import com.acedillo.openfit.rest.ApiClient
 import com.acedillo.openfit.rest.ApiInterface
 import com.google.gson.JsonSyntaxException
 
-class RetrofitRepository : Repository{
+class RetrofitRepository : Repository {
 
     override fun getWorkouts(): Main {
         val apiService = ApiClient.getClient().create(ApiInterface::class.java)
@@ -17,7 +16,7 @@ class RetrofitRepository : Repository{
         return response.body()!!
     }
 
-    override fun getNextWorkout(url : String): Main {
+    override fun getNextWorkout(url: String): Main {
         val apiService = ApiClient.getClient().create(ApiInterface::class.java)
         val call = apiService.getNextWorkouts(url)
         val response = call.execute()
@@ -37,7 +36,7 @@ class RetrofitRepository : Repository{
         return try {
             val response = call.execute()
             response.body()!!
-        }catch (e : JsonSyntaxException){
+        } catch (e: JsonSyntaxException) {
             null
         }
     }

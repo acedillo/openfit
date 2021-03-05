@@ -1,9 +1,9 @@
 package com.acedillo.openfit
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.acedillo.openfit.fragment.WorkoutDetailFragment
@@ -13,7 +13,7 @@ import com.acedillo.openfit.repository.RetrofitRepository
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var viewModel: HomeViewModel
-    private lateinit var loading : TextView
+    private lateinit var loading: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,10 +21,12 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         initViews()
 
-        viewModel = ViewModelProvider(this, HomeViewModel.getFactory(RetrofitRepository())).get(HomeViewModel::class.java)
+        viewModel = ViewModelProvider(this, HomeViewModel.getFactory(RetrofitRepository())).get(
+            HomeViewModel::class.java
+        )
 
         viewModel.loading.observe(this, Observer {
-            loading.visibility = if(it) View.VISIBLE else View.GONE
+            loading.visibility = if (it) View.VISIBLE else View.GONE
         })
 
         viewModel.workouts.observe(this, Observer {
@@ -45,7 +47,7 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
-    private fun initViews(){
+    private fun initViews() {
         loading = findViewById(R.id.loading)
     }
 

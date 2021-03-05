@@ -15,19 +15,19 @@ import com.acedillo.openfit.model.WorkoutDetail
 import com.acedillo.openfit.repository.RetrofitRepository
 import com.acedillo.openfit.util.ImageLoader
 
-class WorkoutDetailFragment: Fragment() {
+class WorkoutDetailFragment : Fragment() {
 
-    private lateinit var thumbnail : ImageView
-    private lateinit var name : TextView
-    private lateinit var category : TextView
-    private lateinit var equipment : TextView
+    private lateinit var thumbnail: ImageView
+    private lateinit var name: TextView
+    private lateinit var category: TextView
+    private lateinit var equipment: TextView
     private lateinit var viewModel: HomeViewModel
-    private lateinit var workoutDetail : WorkoutDetail
+    private lateinit var workoutDetail: WorkoutDetail
 
     companion object {
         private const val ARG_WORKOUT_DETAIL = "arg.workout.detail"
 
-        fun newInstance(workoutDetail: WorkoutDetail) : WorkoutDetailFragment{
+        fun newInstance(workoutDetail: WorkoutDetail): WorkoutDetailFragment {
             val fragment = WorkoutDetailFragment()
             val args = Bundle()
             args.putParcelable(ARG_WORKOUT_DETAIL, workoutDetail)
@@ -55,10 +55,10 @@ class WorkoutDetailFragment: Fragment() {
 
         val equipmentList = workoutDetail.equipment
         var equipmentString = ""
-        if(equipmentList!!.isNotEmpty()){
-           for(equipmentName in equipmentList){
-               equipmentString = equipmentString + equipmentName + "\n"
-           }
+        if (equipmentList!!.isNotEmpty()) {
+            for (equipmentName in equipmentList) {
+                equipmentString = equipmentString + equipmentName + "\n"
+            }
             equipment.text = equipmentString
         }
 
@@ -66,7 +66,7 @@ class WorkoutDetailFragment: Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-       viewModel = ViewModelProvider(
+        viewModel = ViewModelProvider(
             requireActivity(),
             HomeViewModel.getFactory(RetrofitRepository())
         ).get(HomeViewModel::class.java)

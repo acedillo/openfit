@@ -7,11 +7,11 @@ import com.acedillo.openfit.model.WorkoutDetail
 import com.acedillo.openfit.repository.Repository
 import kotlinx.coroutines.*
 
-class HomeViewModel (private val repository: Repository) : ViewModel() {
+class HomeViewModel(private val repository: Repository) : ViewModel() {
 
     private var coroutineScope: CoroutineScope = viewModelScope
 
-    constructor(repository: Repository, coroutineScope: CoroutineScope) : this(repository){
+    constructor(repository: Repository, coroutineScope: CoroutineScope) : this(repository) {
         this.coroutineScope = coroutineScope
     }
 
@@ -42,14 +42,14 @@ class HomeViewModel (private val repository: Repository) : ViewModel() {
     companion object {
         fun getFactory(repository: Repository): ViewModelProvider.Factory {
             return object : ViewModelProvider.Factory {
-                override fun <T : ViewModel?> create(modelClass: Class<T>): T{
+                override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                     return HomeViewModel(repository) as T
                 }
             }
         }
     }
 
-    fun getMain() : Job {
+    fun getMain(): Job {
         _loading.postValue(true)
         return coroutineScope.launch {
             loadMain()
@@ -57,14 +57,14 @@ class HomeViewModel (private val repository: Repository) : ViewModel() {
     }
 
     private suspend fun loadMain() {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             val mainWorkouts = repository.getWorkouts()
             _workouts.postValue(mainWorkouts)
             _loading.postValue(false)
         }
     }
 
-    fun getNextWorkout(url: String) : Job {
+    fun getNextWorkout(url: String): Job {
         _loading.postValue(true)
         return coroutineScope.launch {
             loadNextWorkouts(url)
@@ -72,14 +72,14 @@ class HomeViewModel (private val repository: Repository) : ViewModel() {
     }
 
     private suspend fun loadNextWorkouts(url: String) {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             val mainWorkouts = repository.getNextWorkout(url)
             _nextWorkouts.postValue(mainWorkouts)
             _loading.postValue(false)
         }
     }
 
-    fun getWorkoutDetail(id: Int) : Job {
+    fun getWorkoutDetail(id: Int): Job {
         _loading.postValue(true)
         return coroutineScope.launch {
             loadWorkout(id)
@@ -87,9 +87,9 @@ class HomeViewModel (private val repository: Repository) : ViewModel() {
     }
 
     private suspend fun loadWorkout(id: Int) {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             val workoutDetail = repository.getWorkout(id)
-            if(workoutDetail.equipment == null){
+            if (workoutDetail.equipment == null) {
                 workoutDetail.equipment = ArrayList()
             }
             _workoutDetail.postValue(workoutDetail)
@@ -105,9 +105,9 @@ class HomeViewModel (private val repository: Repository) : ViewModel() {
     }
 
     private suspend fun loadWorkoutImage(id: Int) {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             val workoutImage = repository.getThumbnail(id)
-            if(workoutImage != null) {
+            if (workoutImage != null) {
                 _loading.postValue(false)
 
 
@@ -117,7 +117,7 @@ class HomeViewModel (private val repository: Repository) : ViewModel() {
                     _workoutImageURL.postValue("")
                 }
                 _loading.postValue(false)
-            }else{
+            } else {
                 _workoutImageURL.postValue("")
             }
         }

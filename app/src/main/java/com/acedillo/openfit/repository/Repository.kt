@@ -7,10 +7,10 @@ import com.acedillo.openfit.model.WorkoutImage
 interface Repository {
     fun getWorkouts(): Main
 
-    fun getNextWorkout(url : String) : Main
+    fun getNextWorkout(url: String): Main
 
     fun getWorkout(id: Int): WorkoutDetail
 
-    fun getThumbnail(id: Int) : WorkoutImage?
+    fun getThumbnail(id: Int): WorkoutImage?
 
 }

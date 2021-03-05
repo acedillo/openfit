@@ -10,8 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.acedillo.openfit.WorkoutListAdapter.Constant.VIEW_TYPE_ITEM
 import com.acedillo.openfit.model.Workout
 
-class WorkoutListAdapter (private val list: ArrayList<Workout?>,
-                          private val listener: Listener?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class WorkoutListAdapter(
+    private val list: ArrayList<Workout?>,
+    private val listener: Listener?
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     object Constant {
         const val VIEW_TYPE_ITEM = 0
@@ -19,23 +21,25 @@ class WorkoutListAdapter (private val list: ArrayList<Workout?>,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == VIEW_TYPE_ITEM){
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.view_workout_item, parent, false)
-         WorkoutViewHolder(view)
-        }else{
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.progress_loading, parent, false)
+        return if (viewType == VIEW_TYPE_ITEM) {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.view_workout_item, parent, false)
+            WorkoutViewHolder(view)
+        } else {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.progress_loading, parent, false)
             LoadingViewHolder(view)
         }
 
     }
 
     override fun getItemCount(): Int {
-       return list.size
+        return list.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val data = list[position]
-        if(getItemViewType(position) == VIEW_TYPE_ITEM) {
+        if (getItemViewType(position) == VIEW_TYPE_ITEM) {
             holder as WorkoutViewHolder
             holder.name.text = data?.name
             holder.description.text =
@@ -73,9 +77,9 @@ class WorkoutListAdapter (private val list: ArrayList<Workout?>,
         notifyDataSetChanged()
     }
 
-    class WorkoutViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val name : TextView = itemView.findViewById(R.id.workout_name)
-        val description : TextView = itemView.findViewById(R.id.workout_description)
+    class WorkoutViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val name: TextView = itemView.findViewById(R.id.workout_name)
+        val description: TextView = itemView.findViewById(R.id.workout_description)
     }
 
     class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

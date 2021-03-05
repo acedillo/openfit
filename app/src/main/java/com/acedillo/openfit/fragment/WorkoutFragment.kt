@@ -19,13 +19,13 @@ import com.acedillo.openfit.model.Workout
 import com.acedillo.openfit.repository.RetrofitRepository
 
 
-class WorkoutFragment: Fragment() {
+class WorkoutFragment : Fragment() {
 
     private var viewModel: HomeViewModel? = null
     private var list: RecyclerView? = null
-    private lateinit var adapter : WorkoutListAdapter
-    private lateinit var layoutManager : LinearLayoutManager
-    private lateinit var scrollListener : RecyclerViewLoadMoreScrollListener
+    private lateinit var adapter: WorkoutListAdapter
+    private lateinit var layoutManager: LinearLayoutManager
+    private lateinit var scrollListener: RecyclerViewLoadMoreScrollListener
 
     companion object {
 
@@ -42,7 +42,8 @@ class WorkoutFragment: Fragment() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        viewModel = ViewModelProvider(requireActivity(), HomeViewModel.getFactory(RetrofitRepository()))
+        viewModel =
+            ViewModelProvider(requireActivity(), HomeViewModel.getFactory(RetrofitRepository()))
                 .get(HomeViewModel::class.java)
 
         viewModel?.nextWorkouts?.observe(this, Observer {
@@ -50,9 +51,9 @@ class WorkoutFragment: Fragment() {
         })
 
         viewModel?.loadingNext?.observe(this, Observer {
-            if(it) {
+            if (it) {
                 adapter.addLoadingView()
-            }else {
+            } else {
                 adapter.removeLoadingView()
                 scrollListener.setLoaded()
             }
@@ -65,7 +66,11 @@ class WorkoutFragment: Fragment() {
         (list?.adapter as WorkoutListAdapter).addData(main?.results!!)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
 
         val view = inflater.inflate(R.layout.fragment_workout, container, false)
@@ -83,7 +88,7 @@ class WorkoutFragment: Fragment() {
         return view
     }
 
-    private fun initRecyclerView(view: View, data: Main){
+    private fun initRecyclerView(view: View, data: Main) {
         layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         list = view.findViewById(R.id.workout_list)
         list?.layoutManager = layoutManager
@@ -99,7 +104,7 @@ class WorkoutFragment: Fragment() {
         scrollListener.setOnLoadMoreListener(object :
             RecyclerViewLoadMoreScrollListener.OnLoadMoreListener {
             override fun onLoadMore() {
-               viewModel?.getNextWorkout(data.next!!)
+                viewModel?.getNextWorkout(data.next!!)
             }
         })
 
